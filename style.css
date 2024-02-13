@@ -1,0 +1,39 @@
+:root {
+    --one-row:1;
+    --one-col:1;
+    --two-row:1;
+    --two-col:2;
+    --three-row:1;
+    --three-col:3;
+    --four-row:2;
+    --four-col:1;
+    --five-row:2;
+    --five-col:2;
+    --gap-row: 3;
+    --gap-col: 3;
+}
+
+#grid{
+    display: grid;
+    grid-template-rows: 11rem 11rem 11rem;
+    grid-template-columns: 11rem 11rem 11rem;
+    background-color: hsl(4deg 0 12);
+    width: 35vw;
+    text-align: center;
+}
+
+.box {
+    height: 10rem;
+    width: 10rem;
+    background-color: dimgray;
+    margin: 1rem;
+    font-size: 18pt;
+    font-weight: 800;
+    opacity: 100%;
+}
+
+.gap {
+    opacity: 0;
+    grid-row: var(--gap-row);
+    grid-column: var(--gap-col);
+}
