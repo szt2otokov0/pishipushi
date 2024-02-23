@@ -4,28 +4,33 @@ function $(query) {
 }
 
 
-
+const gridMatrix = {
+    "one": [1, 1],
+    "two": [1, 2],
+    "three": [1, 3],
+    "four": [2, 1],
+    "five": [2, 2],
+    "six": [2, 3],
+    "seven": [3, 1],
+    "eight": [3, 2],
+    "nine": [3, 3]
+};  
 window.onload = () => {
     let boxes = $(".box")
     let boxList = [];
     for (box of boxes.values()) {
-        let randIndex = Math.random * boxes.length;
-        boxList.push(boxes[randIndex])
-        boxes.splice(boxes.indexOf(box),1)
+        boxList.push(box)
     }
-    const root = $(":root")[0];
-    const rootStyle = getComputedStyle(root);
     boxList.forEach(b => {
+        b.style.setProperty("grid-area",`${gridMatrix[b.id][0]} / ${gridMatrix[b.id][1]}`)
         b.onclick = () => {
-            if (!b.classList.contains("gap")) {
-                let gp = $(".gap")[0]
-                gp.style.setProperty("grid-area", `${rootStyle.getPropertyValue(`--${b.id}-row`)} /
-                 ${rootStyle.getPropertyValue(`--${b.id}-col`)}`)
-                const location = getComputedStyle(b).getPropertyValue("grid-row")
-                console.log(location)
-                root.style.setProperty(`--${b.id}-row`,location[0])
-                root.style.setProperty(`--${b.id}-col`,location[1])
-            }
+            if (b.classList.contains("gap")) return;
+            let gp = $(".gap")[0]
+            let pos = gridMatrix[b.id]
+            gp.style.setProperty("grid-area", `${pos[0]} /
+                ${pos[1]}`)
+            b.style.setProperty("grid-area",)
+            gridMatrix[b.id] = b.style.getPropertyValue("grid-area").split(' / ').map(n => parseInt(n))
         }
     })
 }

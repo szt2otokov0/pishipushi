@@ -1,22 +1,4 @@
 :root {
-    --one-row:1;
-    --one-col:1;
-    --two-row:1;
-    --two-col:2;
-    --three-row:1;
-    --three-col:3;
-    --four-row:2;
-    --four-col:1;
-    --five-row:2;
-    --five-col:2;
-    --six-row:2;
-    --six-col:3;
-    --seven-row: 3;
-    --seven-col: 1;
-    --eight-row: 3;
-    --eight-col: 2;
-    --nine-row: 3;
-    --nine-col:3;
     --gap-row: 3;
     --gap-col: 3;
 }
