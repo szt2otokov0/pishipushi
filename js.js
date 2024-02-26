@@ -14,23 +14,30 @@ const gridMatrix = {
     "seven": [3, 1],
     "eight": [3, 2],
     "nine": [3, 3]
-};  
+};
 window.onload = () => {
     let boxes = $(".box")
     let boxList = [];
     for (box of boxes.values()) {
         boxList.push(box)
     }
+    let workingMatrix = {...gridMatrix}
     boxList.forEach(b => {
-        b.style.setProperty("grid-area",`${gridMatrix[b.id][0]} / ${gridMatrix[b.id][1]}`)
+        b.style.setProperty("grid-area", `${workingMatrix[b.id][0]} / ${workingMatrix[b.id][1]}`)
         b.onclick = () => {
             if (b.classList.contains("gap")) return;
             let gp = $(".gap")[0]
-            let pos = gridMatrix[b.id]
+            let gapPos = gp.style.getPropertyValue("grid-area").split(' / ').map(n => parseInt(n))
+            let pos = workingMatrix[b.id]
             gp.style.setProperty("grid-area", `${pos[0]} /
                 ${pos[1]}`)
-            b.style.setProperty("grid-area",)
-            gridMatrix[b.id] = b.style.getPropertyValue("grid-area").split(' / ').map(n => parseInt(n))
+            b.style.setProperty("grid-area", `${gapPos[0]} / ${gapPos[1]}`)
+            workingMatrix[b.id] = gapPos;
+            checkWin();
         }
     })
+
+    function checkWin() {
+        if(workingMatrix !== gridMatrix) console.log("losing")
+    }
 }
