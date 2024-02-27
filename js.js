@@ -31,38 +31,39 @@ window.onload = () => {
                 if(rand % 2 == 0 && !usedSpaces[tile]){
                     posToTake = gridMatrix[tile]
                     usedSpaces[tile] = posToTake;
-                    console.log(tile + " is the chosen one")
                     break;
                 }
             }
         } while(posToTake[0] == 0 && posToTake[1] == 0)
-        console.log(box.id + " is in place " + posToTake)
         box.style.setProperty("grid-area",`${posToTake[0]} / ${posToTake[1]}`)
         workingMatrix[box.id] = [posToTake[0],posToTake[1]]
     }
 
     boxList.forEach(b => {
-        //b.style.setProperty("grid-area", `${workingMatrix[b.id][0]} / ${workingMatrix[b.id][1]}`)
         b.onclick = () => {
-            if (b.classList.contains("gap")) return;
+            let currentPos = getPosition(b)
+            let gapPos = getPosition($(".gap")[0])
+            const distance = Math.abs(Math.sqrt(Math.pow(currentPos[0] - gapPos[0], 2) + Math.pow(currentPos[1] - gapPos[1], 2)));
+            let isNotClickableBox = b.classList.contains("gap") || (distance > 1)
+            if (isNotClickableBox) return;
             let gp = $(".gap")[0]
-            let gapPos = gp.style.getPropertyValue("grid-area").split(' / ').map(n => parseInt(n))
-            let pos = workingMatrix[b.id]
-            gp.style.setProperty("grid-area", `${pos[0]} /
-                ${pos[1]}`)
+            let storedPos = workingMatrix[b.id]
+            gp.style.setProperty("grid-area", `${storedPos[0]} /
+                ${storedPos[1]}`)
             b.style.setProperty("grid-area", `${gapPos[0]} / ${gapPos[1]}`)
             workingMatrix[b.id] = gapPos;
             checkWin();
         }
     })
 
+    function getPosition(element){
+        return element.style.getPropertyValue("grid-area").split(' / ').map(n => parseInt(n));
+    }
+
     function checkWin() {
         for(box in workingMatrix){
-            if(workingMatrix[box][0] !== gridMatrix[box][0] || workingMatrix[box][1] !== gridMatrix[box][1]) {
-                console.log("losing! because " + workingMatrix[box] + " is not the same as " + gridMatrix[box])
-                return;
-            }
+            if(workingMatrix[box][0] !== gridMatrix[box][0] || workingMatrix[box][1] !== gridMatrix[box][1]) return;
         }
-        console.log("you're winner!")
+        alert("Nyertél!")
     }
 }
