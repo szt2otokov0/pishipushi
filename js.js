@@ -21,9 +21,28 @@ window.onload = () => {
     for (box of boxes.values()) {
         boxList.push(box)
     }
+    let usedSpaces = {}
     let workingMatrix = {...gridMatrix}
+    for(box of boxList){
+        let posToTake = [0,0]
+        do{
+            for(tile in gridMatrix){
+                let rand = Math.round(Math.random()*100)
+                if(rand % 2 == 0 && !usedSpaces[tile]){
+                    posToTake = gridMatrix[tile]
+                    usedSpaces[tile] = posToTake;
+                    console.log(tile + " is the chosen one")
+                    break;
+                }
+            }
+        } while(posToTake[0] == 0 && posToTake[1] == 0)
+        console.log(box.id + " is in place " + posToTake)
+        box.style.setProperty("grid-area",`${posToTake[0]} / ${posToTake[1]}`)
+        workingMatrix[box.id] = [posToTake[0],posToTake[1]]
+    }
+
     boxList.forEach(b => {
-        b.style.setProperty("grid-area", `${workingMatrix[b.id][0]} / ${workingMatrix[b.id][1]}`)
+        //b.style.setProperty("grid-area", `${workingMatrix[b.id][0]} / ${workingMatrix[b.id][1]}`)
         b.onclick = () => {
             if (b.classList.contains("gap")) return;
             let gp = $(".gap")[0]
