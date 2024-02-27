@@ -38,6 +38,12 @@ window.onload = () => {
     })
 
     function checkWin() {
-        if(workingMatrix !== gridMatrix) console.log("losing")
+        for(box in workingMatrix){
+            if(workingMatrix[box][0] !== gridMatrix[box][0] || workingMatrix[box][1] !== gridMatrix[box][1]) {
+                console.log("losing! because " + workingMatrix[box] + " is not the same as " + gridMatrix[box])
+                return;
+            }
+        }
+        console.log("you're winner!")
     }
 }
